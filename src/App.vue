@@ -10,19 +10,13 @@ import HelloWorld from './components/HelloWorld.vue'
 export default defineComponent({
   name: 'App',
   components: {
-
-
-
-
-
     HelloWorld
-  },
+  }
 })
 </script>
 
 <style lang="less">
 #app {
-
   font-family: Avenir, Helvetica, Arial, sans-serif;
 
   -webkit-font-smoothing: antialiased;
@@ -30,7 +24,9 @@ export default defineComponent({
   -moz-osx-font-smoothing: grayscale;
 
   text-align: center;
-  color: #2c3e50;
+
+  color: #233f27;
+
   margin-top: 60px;
 }
 </style>

@@ -1,25 +1,18 @@
 <template>
-  <img src="./assets/logo.png">
-  <div>
-    <p>
-      If Element Plus is successfully added to this project, you'll see an
-      <code v-text="'<el-button>'"></code>
-      below
-    </p>
-    <el-button type="primary">el-button</el-button>
-  </div>
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+<div class="app">
+  <h2>{{$store.state.name}}</h2>
+  <router-link to="/login">登录</router-link>
+  <router-link to="/main">首页</router-link>
+  <router-view></router-view>
+</div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
-export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
-}
+import {defineComponent} from 'vue'
+export default defineComponent({
+  name:'App',
+  components:{}
+})
 </script>
 
 <style>

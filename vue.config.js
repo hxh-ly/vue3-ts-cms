@@ -1,5 +1,6 @@
 const path = require('path')
 module.exports = {
+  publicPath:'./',
   // 1 vue-cli的方法
   // 3 链式
   /*

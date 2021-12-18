@@ -1,14 +1,18 @@
-<!--  -->
 <template>
-  <div class="">首页</div>
+  <div class="list">
+    <h2>list</h2>
+  </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
+
 export default defineComponent({
-  setup(props) {
+  name: 'list',
+  setup() {
     return {}
   }
 })
 </script>
+
 <style scoped></style>

@@ -1,6 +1,7 @@
 const path = require('path')
 module.exports = {
   publicPath: './',
+  lintOnSave: false,
   // 1 vue-cli的方法
   // 3 链式
   /*
@@ -14,6 +15,17 @@ module.exports = {
       alias: {
         a: path.resolve(__dirname, 'src'),
         components: path.resolve(__dirname, '@/components')
+      }
+    },
+    devServer: {
+      proxy: {
+        '^/api': {
+          target: 'http://152.136.185.210:5000',
+          pathRewrite: {
+            '^/api': ''
+          },
+          changeOrigin: true
+        }
       }
     }
   }

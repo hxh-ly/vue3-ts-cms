@@ -34,11 +34,11 @@ class HXHRequest {
           background: 'rgba(0,0,0,.5)'
         })
       }
-      console.log('全局请求拦截+loading')
+      //console.log('全局请求拦截+loading')
       return config
     })
     this.instance.interceptors.response.use((config) => {
-      console.log('全局响应拦截-loading')
+      //console.log('全局响应拦截-loading')
       //取消loading
       setTimeout(() => {
         this.loading?.close()
@@ -48,7 +48,7 @@ class HXHRequest {
     //拦截返回的数据
     this.instance.interceptors.response.use(
       (res) => {
-        console.log('全局响应拦截-返回值 AxiosResponse')
+        //console.log('全局响应拦截-返回值 AxiosResponse')
         const data = res.data
         if (data.returnCode == '-1001') {
           console.log('请求失败')

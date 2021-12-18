@@ -6,7 +6,7 @@ class HXHRequestInterceptor<T = AxiosResponse> {
   resInterceptorCatch?: (err: any) => any
 }
 //在原有的配置上加给属性interceptors【hooks】
-interface HXHRequestConfig<T = AxiosResponse>  extends AxiosRequestConfig {
+interface HXHRequestConfig<T = AxiosResponse> extends AxiosRequestConfig {
   interceptors?: HXHRequestInterceptor<T>
   isShowLoading?: boolean
 }

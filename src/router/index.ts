@@ -1,6 +1,7 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 import type { RouteRecordRaw } from 'vue-router'
 import localCache from '@/util/cache'
+import { firstMenu } from '@/util/map-menu'
 const routes: RouteRecordRaw[] = [
   {
     path: '/',
@@ -31,14 +32,20 @@ const router = createRouter({
 
 // 导航守卫
 router.beforeEach((to) => {
+  //看有没有资格进入
   if (to.path !== '/login') {
     const token = localCache.getItem('token')
     if (!token) {
       return '/login'
     }
   }
-  // console.log(router.getRoutes())
-  // console.log(to) // route对象
+  if (to.path == '/main') {
+    console.log(firstMenu)
+
+    return firstMenu.url
+  }
+  console.log(router.getRoutes())
+  console.log(to) // route对象
 })
 
 export default router

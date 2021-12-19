@@ -68,13 +68,14 @@ const login: Module<ILoginState, IRootStore> = {
     },
     changeUserMenus(state, userMenus: any) {
       state.userMenus = userMenus
+      console.log('user菜单数据', userMenus)
+
       //Menus --> routes
       //将menus设在vuex时，
       const routes = mapMenuToRoutes(userMenus)
       routes.forEach((route) => {
         router.addRoute('main', route)
       })
-      console.log(router)
     }
   }
 }

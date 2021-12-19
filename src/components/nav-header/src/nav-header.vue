@@ -3,61 +3,47 @@
   <div class="nav-header">
     <el-icon class="fold-menu" @click="clickFold"><fold /></el-icon>
     <div class="container">
-      <div>面包屑</div>
-      <div>
-        <el-icon size="20"><collection-tag /></el-icon>
-        <el-icon size="20"><bell /></el-icon>
-        <el-icon size="20"><chat-dot-round /></el-icon>
-        <el-dropdown>
-          <span class="el-dropdown-link">
-            <el-icon size="20"><avatar /></el-icon>
-
-            {{ userName }}
-            <el-icon class="el-icon--right">
-              <arrow-down />
-            </el-icon>
-          </span>
-          <template #dropdown>
-            <el-dropdown-menu>
-              <el-dropdown-item>Action 1</el-dropdown-item>
-              <el-dropdown-item>Action 2</el-dropdown-item>
-              <el-dropdown-item>Action 3</el-dropdown-item>
-              <el-dropdown-item disabled>Action 4</el-dropdown-item>
-              <el-dropdown-item divided>Action 5</el-dropdown-item>
-            </el-dropdown-menu>
-          </template>
-        </el-dropdown>
-      </div>
+      <xh-breadcrumb :breadcrumbs="breadcrumbs"></xh-breadcrumb>
+      <user-info-vue></user-info-vue>
     </div>
   </div>
 </template>
 <script lang="ts">
 import { computed, defineComponent, ref } from 'vue'
-import { Avatar, Fold, ArrowDown, ChatDotRound, Bell, CollectionTag } from '@element-plus/icons'
+import { Fold } from '@element-plus/icons'
 import { useStore } from 'vuex'
+import { useRoute } from 'vue-router'
+import XhBreadcrumb from '@/base-ui/breadcrumb'
+import userInfoVue from './user-info.vue'
+import { pathMapBreadcrumbs } from '@/util/map-menu'
 export default defineComponent({
   emits: ['foldChange'],
   components: {
     Fold,
-    ArrowDown,
-    Avatar,
-    ChatDotRound,
-    Bell,
-    CollectionTag
+    XhBreadcrumb,
+    userInfoVue
   },
   setup(props, { emit }) {
     const isFold = ref(false)
     const store = useStore()
-    const userName = computed(() => store.state.login.userInfo.name)
+
     const clickFold = () => {
       isFold.value = !isFold.value
       emit('foldChange', isFold.value)
     }
 
+    const breadcrumbs = computed(() => {
+      const userMenus = store.state.login.userMenus
+      const router = useRoute()
+      const currentPath = router.path
+      //面包屑数据
+      return pathMapBreadcrumbs(userMenus, currentPath)
+    })
+
     return {
       isFold,
       clickFold,
-      userName
+      breadcrumbs
     }
   }
 })
@@ -76,11 +62,6 @@ export default defineComponent({
     padding: 0 20px;
     justify-content: space-between;
     align-items: center;
-    .el-dropdown-link {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
   }
 }
 </style>

@@ -1,4 +1,5 @@
 export interface formItem {
+  field: string
   type: string
   label: string
   rules?: any[]

@@ -1,4 +1,6 @@
 import { RouteRecordRaw } from 'vue-router'
+import { IBreadcrumbs } from '@/base-ui/breadcrumb'
+let firstMenu: any = null
 export function mapMenuToRoutes(useMenus: RouteRecordRaw[]) {
   const routes: RouteRecordRaw[] = []
   //1 默认加载全部路由
@@ -17,7 +19,13 @@ export function mapMenuToRoutes(useMenus: RouteRecordRaw[]) {
     for (const menu of menus) {
       if (menu.type === 2) {
         const route = allRoutes.find((route) => route.path === menu.url)
-        if (route) routes.push(route)
+        if (route) {
+          routes.push(route)
+        }
+        //第一条菜单 让空白路径能重定向
+        if (!firstMenu) {
+          firstMenu = menu
+        }
       } else {
         _recurseGetRoute(menu.children)
       }
@@ -28,3 +36,46 @@ export function mapMenuToRoutes(useMenus: RouteRecordRaw[]) {
 
   return routes
 }
+
+// currentPath
+/* export function pathToMenu(useMenus: any[], currentPath: string): any {
+  for (const menu of useMenus) {
+    if (menu.type === 1) {
+      const findMenu = pathToMenu(menu.children ?? [], currentPath)
+      if (findMenu) {
+        return findMenu
+      }
+    } else if (menu.type === 2 && menu.url === currentPath) {
+      return menu
+    }
+  }
+}
+ */
+export function pathToMenu(
+  useMenus: any[],
+  currentPath: string,
+  breadcrumbs?: IBreadcrumbs[]
+): any {
+  for (const menu of useMenus) {
+    if (menu.type === 1) {
+      const findMenu = pathToMenu(menu.children ?? [], currentPath)
+      if (findMenu) {
+        if (breadcrumbs) {
+          breadcrumbs.push({ name: menu.name, path: menu.url })
+          breadcrumbs.push({ name: findMenu.name, path: findMenu.url })
+        }
+        return findMenu
+      }
+    } else if (menu.type === 2 && menu.url === currentPath) {
+      return menu
+    }
+  }
+}
+
+//路径到面包屑
+export function pathMapBreadcrumbs(useMenus: any[], currentPath: string): any {
+  const Breadcrumbs: IBreadcrumbs[] = []
+  pathToMenu(useMenus, currentPath, Breadcrumbs)
+  return Breadcrumbs
+}
+export { firstMenu }

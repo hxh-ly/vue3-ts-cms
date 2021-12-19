@@ -6,7 +6,7 @@
       <span v-if="!isCollapsed" class="title">vue3+Ts</span>
     </div>
     <el-menu
-      default-active="2"
+      :default-active="defaultValue"
       :isCollapsed="isCollapsed"
       class="el-menu-vertical"
       background-color="#0c2135"
@@ -42,9 +42,10 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, computed } from 'vue'
+import { defineComponent, computed, ref } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { userStore } from '@/store'
+import { pathToMenu } from '@/util/map-menu'
 export default defineComponent({
   props: {
     isCollapsed: {
@@ -53,9 +54,20 @@ export default defineComponent({
   },
   components: {},
   setup(props) {
+    //store
     const store = userStore()
     const useMenus = computed(() => store.state.login.userMenus)
+
+    //router
     const router = useRouter()
+    const curRoute = useRoute()
+    const currentPath = curRoute.path
+
+    //data
+    const menu = pathToMenu(useMenus.value, currentPath)
+    const defaultValue = ref(menu.id + '')
+
+    //handle
     const handleMenuItemClick = (item: any) => {
       console.log('--------')
       router.push({
@@ -64,6 +76,7 @@ export default defineComponent({
     }
     return {
       useMenus,
+      defaultValue,
       handleMenuItemClick
     }
   }

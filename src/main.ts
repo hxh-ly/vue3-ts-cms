@@ -15,6 +15,7 @@ app.use(store)
 setupStore()
 // path: /user => user
 app.use(router)
+
 app.mount('#app')
 
 /* xhrequest.request({

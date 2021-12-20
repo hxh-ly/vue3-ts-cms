@@ -9,13 +9,14 @@ import 'normalize.css'
 import './assets/css/index.less'
 import { xhrequest } from './serve/index'
 import { setupStore } from '@/store'
+import registerGlobal from '@/global'
 const app = createApp(App)
 app.use(ElementPlus)
 app.use(store)
 setupStore()
 // path: /user => user
 app.use(router)
-
+registerGlobal(app)
 app.mount('#app')
 
 /* xhrequest.request({

@@ -1,6 +1,7 @@
 import localCache from '@/util/cache'
 import { createStore, Store, useStore as useVueStore } from 'vuex'
 import { login } from './login/login'
+import { system } from './main/system/system'
 import { IRootStore, IStoreType } from './type'
 const store = createStore<IRootStore>({
   state: () => {
@@ -12,7 +13,8 @@ const store = createStore<IRootStore>({
   mutations: {},
   actions: {},
   modules: {
-    login
+    login,
+    system
   }
 })
 export function setupStore() {

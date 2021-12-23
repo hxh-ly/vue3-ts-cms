@@ -7,6 +7,7 @@
         :proplist="propList"
         :isShowSelect="isShowSelect"
         :isShowId="isShowId"
+        :title="title"
         @emitSelectionChange="emitSelectionChange"
       >
         <!-- id  -->
@@ -30,9 +31,9 @@
           >
         </template>
         <template #handle>
-          <div class='handle-btn'>
-            <el-button  icon="el-icon-remove" type="text">删除</el-button>
-            <el-button  icon="el-icon-edit" type="text">编辑</el-button>
+          <div class="handle-btn">
+            <el-button icon="el-icon-remove" type="text">删除</el-button>
+            <el-button icon="el-icon-edit" type="text">编辑</el-button>
           </div>
         </template>
       </xh-table>
@@ -81,13 +82,15 @@ export default defineComponent({
     const emitSelectionChange = (value: any) => {
       console.log(value)
     }
+    const title = '用户列表'
     return {
       searchFormConfig,
       userList,
       propList,
       isShowId,
       isShowSelect,
-      emitSelectionChange
+      emitSelectionChange,
+      title
     }
   }
 })

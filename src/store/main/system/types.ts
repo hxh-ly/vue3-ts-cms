@@ -1,5 +1,7 @@
 interface ISystemState {
-  userPageList: any[]
-  pageCount: number
+  usersList: any[]
+  usersCount: number
+  roleList: any[]
+  roleCount: number
 }
 export { ISystemState }

@@ -9,16 +9,11 @@
         </div>
       </slot>
     </div>
-    <el-table
-      :data="tableData"
-      style="width: 100%"
-      border
-      @selection-change="handleSelectionChange"
-    >
+    <el-table :data="listData" style="width: 100%" border @selection-change="handleSelectionChange">
       <el-table-column v-if="isShowSelect" type="selection" width="80" align="center" />
       <el-table-column v-if="isShowId" label="id" type="index" width="80" align="center" />
 
-      <template v-for="item in proplist" :key="item.prop">
+      <template v-for="item in propList" :key="item.prop">
         <el-table-column align="center" v-bind="item">
           <template #default="scope">
             <!-- slot 作用域插槽 1写在template上   2 slot传出数据 -->
@@ -36,11 +31,11 @@
         <el-pagination
           @size-change="handleSizeChange"
           @current-change="handleCurrentChange"
-          :current-page="currentPage4"
-          :page-sizes="[100, 200, 300, 400]"
-          :page-size="100"
+          :current-page="page.currentPage"
+          :page-sizes="[10, 20, 30]"
+          :page-size="page.pageSize"
           layout="total, sizes, prev, pager, next, jumper"
-          :total="400"
+          :total="listCount"
         >
         </el-pagination>
       </slot>
@@ -52,11 +47,15 @@ import { defineComponent } from 'vue'
 export default defineComponent({
   components: {},
   props: {
-    tableData: {
+    listData: {
       type: Array,
       require: true
     },
-    proplist: {
+    listCount: {
+      type: Number,
+      require: true
+    },
+    propList: {
       type: Array,
       require: true
     },
@@ -69,18 +68,33 @@ export default defineComponent({
     title: {
       type: String,
       default: ''
+    },
+    page: {
+      type: Object,
+      default: () => ({
+        currentPage: 0,
+        pageSize: 10
+      })
     }
   },
-  emits: ['emitSelectionChange'],
+  emits: ['emitSelectionChange', 'update:page'],
   setup(props, { emit }) {
     const handleSelectionChange = (value: any) => {
       emit('emitSelectionChange', value)
     }
+    //每页展示条数变了
+    const handleSizeChange = (pageSize: number) => {
+      emit('update:page', { ...props.page, pageSize })
+    }
+    //当前页变了
+    const handleCurrentChange = (currentPage: number) => {
+      emit('update:page', { ...props.page, currentPage })
+    }
     return {
-      handleSelectionChange
-      /*  handleSizeChange,
-      handleCurrentChange,
-      currentPage4 */
+      handleSelectionChange,
+      handleSizeChange,
+      handleCurrentChange
+      /* currentPage4 */
     }
   }
 })

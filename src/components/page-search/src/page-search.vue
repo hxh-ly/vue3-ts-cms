@@ -7,8 +7,8 @@
       </template>
       <template #footer>
         <div class="right-btn">
-          <el-button type="primary">重置</el-button>
-          <el-button type="primary">检索</el-button>
+          <el-button type="primary" @click="handleResetClick">重置</el-button>
+          <el-button type="primary" @click="handleQueryClick">检索</el-button>
         </div>
       </template>
     </xh-form>
@@ -27,16 +27,31 @@ export default defineComponent({
   components: {
     XhForm
   },
-  setup(props) {
-    const formData = ref({
-      field: '',
-      id: '',
-      name: '',
-      password: '',
-      createTime: ''
-    })
+  //发到user
+  emits: ['resetBtnClick', 'queryBtnClick'],
+  setup(props, { emit }) {
+    const originFormData: any = {}
+    for (const item of props.searchFormConfig?.formItem ?? []) {
+      originFormData[item.field] = ''
+    }
+    const formData = ref(originFormData)
+    console.log('formData', formData.value)
+
+    const handleResetClick = () => {
+      // for (const key in formOriginData) {
+      //   formData.value[`${key}`] = formOriginData[key]
+      // }
+      formData.value = originFormData
+      emit('resetBtnClick')
+    }
+    const handleQueryClick = () => {
+      emit('queryBtnClick', formData.value)
+    }
+
     return {
-      formData
+      formData,
+      handleResetClick,
+      handleQueryClick
     }
   }
 })

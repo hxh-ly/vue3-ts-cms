@@ -6,35 +6,48 @@ const system: Module<ISystemState, IRootStore> = {
   namespaced: true,
   state: () => {
     return {
-      userPageList: [],
-      pageCount: 0
+      usersList: [],
+      usersCount: 0,
+      roleList: [],
+      roleCount: 0
     }
   },
   actions: {
     async getPageListAction({ commit }, payload: any) {
-      console.log(payload.pageUrl)
-      console.log(payload.queryInfo)
+      const pageName = payload.pageName
+      const pageUrl = `${pageName}/list`
       //网络请求
-      const pageResult = await getPageListData(payload.pageUrl, payload.queryInfo)
+      const pageResult = await getPageListData(pageUrl, payload.queryInfo)
       const { list, totalCount } = pageResult.data
-      commit('changeUserList', list)
-      commit('changeUserCount', totalCount)
+      const changePageName = pageName.slice(0, 1).toUpperCase() + pageName.slice(1)
+      commit(`change${changePageName}List`, list)
+      commit(`change${changePageName}Count`, totalCount)
     }
   },
   mutations: {
-    changeUserList(state, data: any) {
-      state.userPageList = data
-      console.log(
-        '🚀 ~ file: system.ts ~ line 25 ~ changeUserList ~ state.userPageList',
-        state.userPageList
-      )
+    changeUsersList(state, data: any) {
+      state.usersList = data
     },
-    changeUserCount(state, data: any) {
-      state.pageCount = data
-      console.log(
-        '🚀 ~ file: system.ts ~ line 32 ~ changeUserCount ~ state.pageCount',
-        state.pageCount
-      )
+    changeUsersCount(state, data: any) {
+      state.usersCount = data
+    },
+    changeRoleList(state, data: any) {
+      state.roleList = data
+    },
+    changeRoleCount(state, data: any) {
+      state.roleCount = data
+    }
+  },
+  getters: {
+    pageListData(state) {
+      return function (pageName: string) {
+        return (state as any)[`${pageName}List`]
+      }
+    },
+    pageListCount(state) {
+      return function (pageName: string) {
+        return (state as any)[`${pageName}Count`]
+      }
     }
   }
 }

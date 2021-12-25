@@ -12,17 +12,22 @@
                   :placeholder="item.placeholder"
                   v-bind="item.otherOptions"
                   :show-password="item.type === 'password'"
-                  v-model="formData[`${item.field}`]"
+                  :model-value="modelValue[`${item.field}`]"
+                  @update:model-value="handleValueChange($event, item.field)"
                 ></el-input>
               </template>
               <template v-else-if="item.type == 'select'">
-                <el-select :placeholder="item.placeholder" style="width: 100%">
+                <el-select
+                  :placeholder="item.placeholder"
+                  v-bind="item.otherOptions"
+                  :model-value="modelValue[`${item.field}`]"
+                  @update:model-value="handleValueChange($event, item.field)"
+                  style="width: 100%"
+                >
                   <el-option
                     v-for="option in item.options"
-                    v-bind="item.otherOptions"
                     :key="option.value"
                     :value="option.value"
-                    v-model="formData[`${item.field}`]"
                   >
                     {{ option.title }}
                   </el-option>
@@ -31,7 +36,8 @@
               <template v-else-if="item.type == 'datepicker'">
                 <el-date-picker
                   v-bind="item.otherOptions"
-                  v-model="formData[`${item.field}`]"
+                  :model-value="modelValue[`${item.field}`]"
+                  @update:model-value="handleValueChange($event, item.field)"
                 ></el-date-picker>
               </template>
             </el-form-item>
@@ -81,16 +87,15 @@ export default defineComponent({
   },
   emits: ['update:modelValue'],
   setup(props, { emit }) {
-    const formData = ref({ ...props.modelValue })
-    watch(
-      formData,
-      (newVal) => {
-        emit('update:modelValue', newVal)
-      },
-      { deep: true }
-    )
+    // 外层的formData【key】=''  这样改能影响到引用
+    /*     let formData = ref({ ...props.modelValue })
+     */
+    const handleValueChange = (value: any, field: string) => {
+      emit('update:modelValue', { ...props.modelValue, [field]: value })
+    }
+
     return {
-      formData
+      handleValueChange
     }
   }
 })

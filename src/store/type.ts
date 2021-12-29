@@ -3,6 +3,8 @@ import { ISystemState } from './main/system/types'
 interface IRootStore {
   name: string
   age: string
+  entriesDepartment: any[]
+  entriesRole: any[]
 }
 interface IRootWithModule {
   login: ILoginState

@@ -2,7 +2,7 @@ import { Module } from 'vuex'
 import { IRootStore } from '../type'
 import { ILoginState } from './type'
 import router from '@/router'
-import { mapMenuToRoutes } from '@/util/map-menu'
+import { mapMenuToRoutes, mapMenusToPermissions } from '@/util/map-menu'
 import {
   accountLoginRequest,
   requestUserInfoById,
@@ -16,12 +16,12 @@ const login: Module<ILoginState, IRootStore> = {
     return {
       token: 'aa',
       userInfo: 'asdas',
-      userMenus: []
+      userMenus: [],
+      permission: []
     }
   },
   actions: {
     async accountLoginAction({ commit }, playload: IAccount) {
-      console.log('执行accountLoginAction', playload)
       //1
       const loginData = await accountLoginRequest(playload)
       const { id, token } = loginData.data
@@ -40,7 +40,7 @@ const login: Module<ILoginState, IRootStore> = {
       router.push('/main')
     },
     phoneLoginAction({ commit }, playload: any) {
-      console.log('执行phoneLoginAction', playload)
+      //console.log('执行phoneLoginAction', playload)
     },
     loadLocalLogin({ commit }) {
       const token = localCache.getItem('token')
@@ -60,16 +60,16 @@ const login: Module<ILoginState, IRootStore> = {
   mutations: {
     changeToken(state, token: string) {
       state.token = token
-      console.log(state.token)
     },
     changeUserInfo(state, userInfo: any) {
       state.userInfo = userInfo
-      console.log(state.userInfo)
     },
     changeUserMenus(state, userMenus: any) {
       state.userMenus = userMenus
-      console.log('user菜单数据', userMenus)
-
+      //4 将用户的权限操作保存
+      state.permission = mapMenusToPermissions(userMenus)
+      console.log('这个用户的权限', state.permission)
+      //console.log('user菜单数据', userMenus)
       //Menus --> routes
       //将menus设在vuex时，
       const routes = mapMenuToRoutes(userMenus)

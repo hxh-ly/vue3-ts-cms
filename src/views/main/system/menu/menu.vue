@@ -1,16 +1,25 @@
 <template>
   <div class="menu">
-    <h2>menu</h2>
+    <page-content :contentTableConfig="contentTableConfig" pageName="menu"></page-content>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
-
+import { defineComponent, computed, ref, reactive } from 'vue'
+import { searchFormConfig } from './config/search.config'
+import { contentTableConfig } from './config/content.config'
+import pageSearch from '@/components/page-search'
+import pageContent from '@/components/page-content'
 export default defineComponent({
   name: 'xh-menu',
+  components: {
+    pageSearch,
+    pageContent
+  },
   setup() {
-    return {}
+    return {
+      contentTableConfig
+    }
   }
 })
 </script>

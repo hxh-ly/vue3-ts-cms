@@ -7,3 +7,8 @@ export function getPageListData(url: string, queryInfo: any): any {
     isShowLoading: false
   })
 }
+export function deletePageData(url: string) {
+  return xhrequest.delete<IDataType>({
+    url: url
+  })
+}

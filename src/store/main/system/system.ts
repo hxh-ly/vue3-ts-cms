@@ -1,7 +1,7 @@
 import { Module } from 'vuex'
 import { ISystemState } from './types'
 import { IRootStore } from '../../type'
-import { getPageListData } from '@/serve/main/system/system'
+import { getPageListData, deletePageData } from '@/serve/main/system/system'
 const system: Module<ISystemState, IRootStore> = {
   namespaced: true,
   state: () => {
@@ -9,7 +9,11 @@ const system: Module<ISystemState, IRootStore> = {
       usersList: [],
       usersCount: 0,
       roleList: [],
-      roleCount: 0
+      roleCount: 0,
+      goodsList: [],
+      goodsCount: 0,
+      menuList: [],
+      menuCount: 0
     }
   },
   actions: {
@@ -22,6 +26,18 @@ const system: Module<ISystemState, IRootStore> = {
       const changePageName = pageName.slice(0, 1).toUpperCase() + pageName.slice(1)
       commit(`change${changePageName}List`, list)
       commit(`change${changePageName}Count`, totalCount)
+    },
+    async deletePageData(context, playload: any) {
+      const { pageName, id } = playload
+      const pageUrl = `${pageName}/${id}`
+      await deletePageData(pageUrl)
+      context.dispatch('getPageListAction', {
+        pageName,
+        queryInfo: {
+          offset: 0,
+          size: 10
+        }
+      })
     }
   },
   mutations: {
@@ -36,6 +52,18 @@ const system: Module<ISystemState, IRootStore> = {
     },
     changeRoleCount(state, data: any) {
       state.roleCount = data
+    },
+    changeGoodsList(state, data: any) {
+      state.goodsList = data
+    },
+    changeGoodsCount(state, data: any) {
+      state.goodsCount = data
+    },
+    changeMenuList(state, data: any) {
+      state.menuList = data
+    },
+    changeMenuCount(state, data: any) {
+      state.menuCount = data
     }
   },
   getters: {

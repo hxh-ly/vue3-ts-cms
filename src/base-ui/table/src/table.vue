@@ -5,16 +5,22 @@
       <slot name="header">
         <div class="header-left">{{ title }}</div>
         <div class="header-handle">
-          <el-button size="mini" type="primary">添加用户</el-button>
+          <slot name="headerHandler"></slot>
         </div>
       </slot>
     </div>
-    <el-table :data="listData" style="width: 100%" border @selection-change="handleSelectionChange">
+    <el-table
+      :data="listData"
+      style="width: 100%"
+      border
+      @selection-change="handleSelectionChange"
+      v-bind="childrenProps"
+    >
       <el-table-column v-if="isShowSelect" type="selection" width="80" align="center" />
       <el-table-column v-if="isShowId" label="id" type="index" width="80" align="center" />
 
       <template v-for="item in propList" :key="item.prop">
-        <el-table-column align="center" v-bind="item">
+        <el-table-column align="center" v-bind="item" show-overflow-tooltip>
           <template #default="scope">
             <!-- slot 作用域插槽 1写在template上   2 slot传出数据 -->
             <slot :name="item.slotName" :row="scope.row">
@@ -25,7 +31,7 @@
         </el-table-column>
       </template>
     </el-table>
-    <div class="footer">
+    <div class="footer" v-if="showFooter">
       <slot name="footer">
         <!-- 分页器 -->
         <el-pagination
@@ -72,9 +78,17 @@ export default defineComponent({
     page: {
       type: Object,
       default: () => ({
-        currentPage: 0,
+        currentPage: 1,
         pageSize: 10
       })
+    },
+    childrenProps: {
+      type: Object,
+      default: () => ({})
+    },
+    showFooter: {
+      type: Boolean,
+      default: true
     }
   },
   emits: ['emitSelectionChange', 'update:page'],

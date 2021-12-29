@@ -48,5 +48,5 @@ interface DataType {
   .then((res) => {
     console.log(res.data)
   }) */
-console.log(process.env)
-console.log(process.env.VUE_APP_BASE_URL)
+//console.log(process.env)
+//console.log(process.env.VUE_APP_BASE_URL)

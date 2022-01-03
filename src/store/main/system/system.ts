@@ -1,7 +1,12 @@
 import { Module } from 'vuex'
 import { ISystemState } from './types'
 import { IRootStore } from '../../type'
-import { getPageListData, deletePageData } from '@/serve/main/system/system'
+import {
+  getPageListData,
+  deletePageData,
+  createPageData,
+  editPageData
+} from '@/serve/main/system/system'
 const system: Module<ISystemState, IRootStore> = {
   namespaced: true,
   state: () => {
@@ -33,6 +38,30 @@ const system: Module<ISystemState, IRootStore> = {
       await deletePageData(pageUrl)
       context.dispatch('getPageListAction', {
         pageName,
+        queryInfo: {
+          offset: 0,
+          size: 10
+        }
+      })
+    },
+    async createPageDataAction({ dispatch }, payload: any) {
+      const { pageName, newData } = payload
+      const pageUrl = `/${pageName}`
+      await createPageData(pageUrl, newData)
+      dispatch('getPageListAction', {
+        pageName: pageName,
+        queryInfo: {
+          offset: 0,
+          size: 10
+        }
+      })
+    },
+    async editPageDataAction({ dispatch }, playload: any) {
+      const { pageName, editData, id } = playload
+      const pageUrl = `/${pageName}/${id}`
+      await editPageData(pageUrl, editData)
+      dispatch('getPageListAction', {
+        pageName: pageName,
         queryInfo: {
           offset: 0,
           size: 10

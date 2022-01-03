@@ -78,6 +78,7 @@ export function pathMapBreadcrumbs(useMenus: any[], currentPath: string): any {
   pathToMenu(useMenus, currentPath, Breadcrumbs)
   return Breadcrumbs
 }
+//菜单映射权限
 export function mapMenusToPermissions(useMenus: any[]): any {
   const permissions: string[] = []
   const _recurseGetPermissions = (useMenus: any[]) => {
@@ -92,4 +93,20 @@ export function mapMenusToPermissions(useMenus: any[]): any {
   _recurseGetPermissions(useMenus)
   return permissions
 }
+//菜单映射到叶子结点，设置到 El-tree
+export function menuMapLeafKeys(menusList: any[]): any {
+  const leftKeys: number[] = []
+  const _recurseGetLeaf = (menusList: any[]) => {
+    for (const menu of menusList) {
+      if (menu.children) {
+        _recurseGetLeaf(menu.children)
+      } else {
+        leftKeys.push(menu.id)
+      }
+    }
+  }
+  _recurseGetLeaf(menusList)
+  return leftKeys
+}
+
 export { firstMenu }

@@ -18,8 +18,8 @@ export const contentTableConfig = {
     { label: '操作', minWidth: '120', slotName: 'handle' }
   ],
   isShowId: true,
-  isShowSelect: true,
-  emitSelectionChange: (value: any) => {
+  isShowSelect: true
+  /*  emitSelectionChange: (value: any) => {
     console.log(value)
-  }
+  } */
 }

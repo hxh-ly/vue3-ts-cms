@@ -2,6 +2,7 @@ import localCache from '@/util/cache'
 import { createStore, Store, useStore as useVueStore } from 'vuex'
 import { login } from './login/login'
 import { system } from './main/system/system'
+import dashboard from './main/analysis/dashboard'
 import { IRootStore, IStoreType } from './type'
 import { getPageListData } from '@/serve/main/system/system'
 const store = createStore<IRootStore>({
@@ -10,7 +11,8 @@ const store = createStore<IRootStore>({
       name: 'hxh',
       age: 'asda',
       entriesDepartment: [],
-      entriesRole: []
+      entriesRole: [],
+      entriesMenu: []
     }
   },
   mutations: {
@@ -19,6 +21,9 @@ const store = createStore<IRootStore>({
     },
     changeEntriesRole(state, list: any) {
       state.entriesRole = list
+    },
+    changeEntriesMenu(state, list: any) {
+      state.entriesMenu = list
     }
   },
   actions: {
@@ -29,16 +34,22 @@ const store = createStore<IRootStore>({
       const RoleResult = await getPageListData('/role/list', { offset: 0, size: 1000 })
       const { list: roleList } = RoleResult.data
       commit('changeEntriesRole', roleList)
+      const menuResult = await getPageListData('/menu/list', {})
+      const { list: menuList } = menuResult.data
+      console.log('````````````````', menuList)
+
+      commit('changeEntriesMenu', menuList)
     }
   },
   modules: {
     login,
-    system
+    system,
+    dashboard
   }
 })
 export function setupStore() {
   store.dispatch('login/loadLocalLogin')
-  store.dispatch('getInitialDataAction')
+  //store.dispatch('getInitialDataAction')
 }
 export function userStore(): Store<IStoreType> {
   return useVueStore()

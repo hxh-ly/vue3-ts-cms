@@ -16,10 +16,7 @@
         </span>
         <template #dropdown>
           <el-dropdown-menu>
-            <el-dropdown-item>Action 1</el-dropdown-item>
-            <el-dropdown-item>Action 2</el-dropdown-item>
-            <el-dropdown-item>Action 3</el-dropdown-item>
-            <el-dropdown-item disabled>Action 4</el-dropdown-item>
+            <el-dropdown-item @click="handleExitClick">退出登录</el-dropdown-item>
             <el-dropdown-item divided>Action 5</el-dropdown-item>
           </el-dropdown-menu>
         </template>
@@ -31,6 +28,8 @@
 import { defineComponent, computed } from 'vue'
 import { Avatar, Fold, ArrowDown, ChatDotRound, Bell, CollectionTag } from '@element-plus/icons'
 import { useStore } from 'vuex'
+import localCache from '@/util/cache'
+import { useRouter } from 'vue-router'
 export default defineComponent({
   components: {
     ArrowDown,
@@ -41,9 +40,15 @@ export default defineComponent({
   },
   setup(props) {
     const store = useStore()
+    const router = useRouter()
+    const handleExitClick = () => {
+      localCache.delItem('token')
+      router.push('/main')
+    }
     const userName = computed(() => store.state.login.userInfo.name)
     return {
-      userName
+      userName,
+      handleExitClick
     }
   }
 })

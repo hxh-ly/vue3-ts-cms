@@ -21,12 +21,14 @@ const login: Module<ILoginState, IRootStore> = {
     }
   },
   actions: {
-    async accountLoginAction({ commit }, playload: IAccount) {
+    async accountLoginAction({ commit, dispatch }, playload: IAccount) {
       //1
       const loginData = await accountLoginRequest(playload)
       const { id, token } = loginData.data
       commit('changeToken', token)
       localCache.setItem('token', token)
+      /* 请求菜单，角色数据 */
+      dispatch('getInitialDataAction', null, { root: true })
       //2 用户信息
       const LoginUserInfo = (await requestUserInfoById(id)).data
       localCache.setItem('userInfo', LoginUserInfo)
@@ -42,10 +44,11 @@ const login: Module<ILoginState, IRootStore> = {
     phoneLoginAction({ commit }, playload: any) {
       //console.log('执行phoneLoginAction', playload)
     },
-    loadLocalLogin({ commit }) {
+    loadLocalLogin({ commit, dispatch }) {
       const token = localCache.getItem('token')
       if (token) {
         commit('changeToken', token)
+        dispatch('getInitialDataAction', null, { root: true })
       }
       const userInfo = localCache.getItem('userInfo')
       if (userInfo) {

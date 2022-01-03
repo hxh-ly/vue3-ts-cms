@@ -8,12 +8,12 @@
 import { defineComponent, computed, ref, reactive } from 'vue'
 import { searchFormConfig } from './config/search.config'
 import { contentTableConfig } from './config/content.config'
-import pageSearch from '@/components/page-search'
+/* import pageSearch from '@/components/page-search' */
 import pageContent from '@/components/page-content'
 export default defineComponent({
   name: 'xh-menu',
   components: {
-    pageSearch,
+    /* pageSearch, */
     pageContent
   },
   setup() {

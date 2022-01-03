@@ -14,6 +14,7 @@
     ></page-content>
     <page-model
       ref="pageModalRef"
+      pageName="users"
       :modelConfig="modelFormConfigRef"
       :defaultInfo="defaultInfo"
     ></page-model>

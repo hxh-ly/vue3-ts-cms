@@ -18,7 +18,9 @@ const system: Module<ISystemState, IRootStore> = {
       goodsList: [],
       goodsCount: 0,
       menuList: [],
-      menuCount: 0
+      menuCount: 0,
+      departmentList:[],
+      departmentCount:0
     }
   },
   actions: {
@@ -93,7 +95,15 @@ const system: Module<ISystemState, IRootStore> = {
     },
     changeMenuCount(state, data: any) {
       state.menuCount = data
-    }
+    },
+    changeDepartmentList(state, data: any) {
+      state.departmentList = data
+      console.log('%c 部门','red',data);
+
+    },
+    changeDepartmentCount(state, data: any) {
+      state.departmentCount = data
+    },
   },
   getters: {
     pageListData(state) {

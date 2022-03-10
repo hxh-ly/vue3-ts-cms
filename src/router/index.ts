@@ -44,8 +44,8 @@ router.beforeEach((to) => {
 
     return firstMenu.url
   }
-  console.log(router.getRoutes())
-  console.log(to) // route对象
+/*   console.log(router.getRoutes())
+  console.log(to) // route对象 */
 })
 
 export default router

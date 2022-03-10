@@ -111,6 +111,8 @@ export default defineComponent({
     const userCount = computed(() => store.getters['system/pageListCount'](props.pageName))
 
     //4 动态获取到propList字段
+    console.log(props);
+
     const otherPropSlots = props.contentTableConfig?.propList.filter((item: any) => {
       if (item.slotName == 'status') return false
       if (item.slotName == 'createAt') return false

@@ -1,8 +1,7 @@
 import { IForm } from '@/base-ui/form'
 export const searchFormConfig: IForm = {
-  labelWidth: '120px',
+  labelWidth: '80px',
   formItem: [
-    { field: 'id', type: 'input', label: 'id', placeholder: '请输入id', otherOptions: {} },
     {
       field: 'name',
       type: 'input',
@@ -49,6 +48,6 @@ export const searchFormConfig: IForm = {
     padding: '10px 40px'
   },
   colLayout: {
-    span: 8
+    span: 12
   }
 }

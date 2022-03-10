@@ -7,10 +7,13 @@ export function mapMenuToRoutes(useMenus: RouteRecordRaw[]) {
   const allRoutes: RouteRecordRaw[] = []
   //文件上下文
   const routeFiles = require.context('../router/main', true, /\.ts/)
+  console.log("require.context --》routeFiles",routeFiles.keys());
   routeFiles.keys().forEach((key) => {
     // key ---> ./src/main/product/goods
     // 一个个的模块
     const route = require('../router/main' + key.split('.')[1])
+    console.log("require(../router/main/路径)",route);
+
     allRoutes.push(route.default)
   })
   console.log(allRoutes)

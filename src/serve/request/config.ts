@@ -13,7 +13,7 @@ if (process.env.NODE_ENV == 'development') {
   VUE_APP_BASE_URL = 'http://152.136.185.210:5000'
   VUE_APP_BASE_NAME = 'hxh-prod'
 } else {
- /*  VUE_APP_BASE_URL = 'http://coderwhy.org/test' */
+  /*  VUE_APP_BASE_URL = 'http://coderwhy.org/test' */
 }
 
 export { VUE_APP_BASE_URL, VUE_APP_BASE_NAME, TIMEOUT }

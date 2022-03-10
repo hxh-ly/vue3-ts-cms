@@ -1,18 +1,18 @@
 import { IForm } from '@/base-ui/form'
 export const searchFormConfig: IForm = {
-  labelWidth: '80px',
+  labelWidth: '120px',
   formItem: [
     {
       field: 'name',
       type: 'input',
-      label: '角色名称',
-      placeholder: '请输入角色名称'
+      label: '部门名称',
+      placeholder: '请输入部门名称'
     },
     {
-      field: 'intro',
+      field: 'leader',
       type: 'input',
-      label: '权限介绍',
-      placeholder: '请输入权限介绍'
+      label: '部门leader',
+      placeholder: '请输入部门leader'
     },
     {
       field: 'createTime',

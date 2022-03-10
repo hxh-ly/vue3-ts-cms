@@ -76,6 +76,7 @@ const login: Module<ILoginState, IRootStore> = {
       //Menus --> routes
       //将menus设在vuex时，
       const routes = mapMenuToRoutes(userMenus)
+      console.log('require.context(...)',routes)
       routes.forEach((route) => {
         router.addRoute('main', route)
       })

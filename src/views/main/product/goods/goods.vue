@@ -1,11 +1,8 @@
 <template>
   <div class="user">
-    <page-search
-      :searchFormConfig="searchFormConfig"
-      @resetBtnClick="handleResetClick"
-      @queryBtnClick="handleQueryClick"
+    <page-search :searchFormConfig="searchFormConfig"  @resetBtnClick="handleResetClick"  @queryBtnClick="handleQueryClick"
     />
-    <page-content ref="pageContentRef" :contentTableConfig="contentTableConfig" pageName="goods">
+    <page-content :contentTableConfig="contentTableConfig" pageName="goods" ref="pageContentRef">
       <template #image="scope">
         <el-image
           style="width: 60px; height: 60px"

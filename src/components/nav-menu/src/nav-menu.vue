@@ -3,7 +3,7 @@
   <div class="nav-menu">
     <div class="logo">
       <img class="img" src="~@/assets/img/logo.svg" alt="" />
-      <span v-if="!isCollapsed" class="title">vue3+Ts</span>
+      <span v-if="!isCollapsed" class="title">物资后台系统</span>
     </div>
     <el-menu
       :default-active="defaultValue"
@@ -30,13 +30,13 @@
             </template>
           </el-sub-menu>
         </template>
-        <!-- 一级菜单 -->
+       <!--
         <template v-else-if="item.type == 2">
           <el-menu-item :index="item.id + ''">
             <i v-if="item.icon" :class="item.icon"></i>
             <span>{{ item.name }}</span>
           </el-menu-item>
-        </template>
+        </template> -->
       </template>
     </el-menu>
   </div>
@@ -56,7 +56,8 @@ export default defineComponent({
   setup(props) {
     //store
     const store = userStore()
-    const useMenus = computed(() => store.state.login.userMenus)
+    const useMenus = computed(() => {
+      return store.state.login.userMenus})
 
     //router
     const router = useRouter()

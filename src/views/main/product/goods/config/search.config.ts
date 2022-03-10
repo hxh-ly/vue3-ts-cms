@@ -1,12 +1,18 @@
 import { IForm } from '@/base-ui/form'
 export const searchFormConfig: IForm = {
-  labelWidth: '120px',
+  labelWidth: '80px',
   formItem: [
     {
       field: 'name',
       type: 'input',
       label: '商品名字',
       placeholder: '请输入商品名字'
+    },
+    {
+      field: 'address',
+      type: 'input',
+      label: '商品地址',
+      placeholder: '请选择商品地址'
     },
     {
       field: 'status',
@@ -18,13 +24,6 @@ export const searchFormConfig: IForm = {
         { title: '禁用', value: 0 }
       ]
     },
-    {
-      field: 'address',
-      type: 'input',
-      label: '商品地址',
-      placeholder: '请选择商品地址'
-    },
-
     {
       field: 'createAt',
       type: 'datepicker',
@@ -41,6 +40,6 @@ export const searchFormConfig: IForm = {
     padding: '10px 40px'
   },
   colLayout: {
-    span: 8
+    span: 12
   }
 }
